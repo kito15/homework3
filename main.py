@@ -18,6 +18,7 @@ def main():
     invoker = CommandInvoker()
 
     while True:
+        print("Hey there! Let's do some math!")
         a = get_number_input("Enter the first number: ")
         b = get_number_input("Enter the second number: ")
         
@@ -32,7 +33,7 @@ def main():
         
         invoker.execute_commands()
 
-        if input("Do you want to perform another calculation? (y/n): ").lower() != 'y':
+        if input("Wanna do another calculation? (y/n): ").lower() != 'y':
             break
 
 if __name__ == "__main__":
