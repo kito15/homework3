@@ -1,7 +1,6 @@
 from calculator.calculator import Calculator
 from calculator.calculation import Calculation, Calculations
-from command_pattern import CommandInvoker, CommandHistory
-from calculator.calculation import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from command_pattern import CommandInvoker, CommandHistory, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 
 def get_number_input(prompt):
     while True:

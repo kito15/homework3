@@ -5,7 +5,7 @@ import pytest
 from main import main
 from calculator.calculator import Calculator
 from calculator.calculation import Calculation, Calculations
-from command_pattern import CommandInvoker, CommandHistory
+from command_pattern import CommandInvoker, CommandHistory, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 
 @pytest.mark.parametrize("inputs, expected_outputs", [
     (["5", "3", "add", "n"], ["The result of 5.0 add 3.0 is equal to 8.0"]),
