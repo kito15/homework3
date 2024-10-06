@@ -86,3 +86,6 @@ def main():
     print("Command history:")
     for cmd in history.get_history():
         print(f"Executed: {cmd.__class__.__name__}({cmd.a:.1f}, {cmd.b:.1f})")
+
+if __name__ == "__main__":
+    main()
