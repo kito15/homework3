@@ -2,7 +2,8 @@
 # pylint: disable=redefined-outer-name
 import pytest
 from faker import Faker
-from calculator import Calculator, Calculation, Calculations
+from calculator.calculator import Calculator
+from calculator.calculation import Calculation, Calculations
 
 fake = Faker()
 
@@ -103,7 +104,6 @@ def test_calculations_get_last_calculation(setup_calculations):
     last_calc = Calculations.get_last_calculation()
     assert last_calc == calc2
 
-# Removed 'setup_calculations' as it's unused in this test
 def test_calculations_clear_history():
     """Test clearing the calculation history"""
     Calculations.clear_history()

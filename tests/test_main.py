@@ -2,7 +2,10 @@
 from unittest.mock import patch
 from io import StringIO
 import pytest
-import main
+from main import main
+from calculator.calculator import Calculator
+from calculator.calculation import Calculation, Calculations
+from command_pattern import CommandInvoker, CommandHistory
 
 @pytest.mark.parametrize("inputs, expected_outputs", [
     (["5", "3", "add", "n"], ["The result of 5.0 add 3.0 is equal to 8.0"]),
@@ -26,7 +29,7 @@ def test_main_function(inputs, expected_outputs):
     """Test the main function with various inputs and expected outputs."""
     with patch('builtins.input', side_effect=inputs), \
          patch('sys.stdout', new=StringIO()) as fake_out:
-        main.main()
+        main()
         output = fake_out.getvalue()
         for expected in expected_outputs:
             assert expected in output
