@@ -4,6 +4,7 @@ from calculator.calculator import Calculator
 from calculator.calculation import Calculation, Calculations
 from command_pattern import CommandInvoker, CommandHistory, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 from calculator.plugin import CalculatorPlugin
+from typing import List  # Add this import
 
 def get_number_input(prompt):
     while True:
