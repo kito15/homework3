@@ -1,4 +1,4 @@
-from calculator import Calculator, Calculation
+from calculator import Calculator, Calculation, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand, CommandInvoker
 
 def get_number_input(prompt):
     while True:
@@ -9,11 +9,13 @@ def get_number_input(prompt):
 
 def main():
     operations = {
-        'add': Calculator.add,
-        'subtract': Calculator.subtract,
-        'multiply': Calculator.multiply,
-        'divide': Calculator.divide
+        'add': AddCommand,
+        'subtract': SubtractCommand,
+        'multiply': MultiplyCommand,
+        'divide': DivideCommand
     }
+
+    invoker = CommandInvoker()
 
     while True:
         a = get_number_input("Enter the first number: ")
@@ -25,14 +27,10 @@ def main():
             if operation not in operations:
                 print(f"An error occurred: Unknown operation: {operation}")
 
-        try:
-            calc = Calculation(a, b, operations[operation])
-            result = calc.perform_operation()
-            print(f"The result of {a} {operation} {b} is equal to {result}")
-        except ZeroDivisionError:
-            print("An error occurred: Cannot divide by zero")
-        except Exception as e:
-            print(f"An unexpected error occurred: {str(e)}")
+        command = operations[operation](a, b)
+        invoker.add_command(command)
+        
+        invoker.execute_commands()
 
         if input("Do you want to perform another calculation? (y/n): ").lower() != 'y':
             break

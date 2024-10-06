@@ -1,6 +1,7 @@
 """This module contains the Calculator, Calculation, and Calculations classes."""
 
 from typing import Union, Callable, List
+from command_pattern import Command
 
 Number = Union[int, float]
 
@@ -81,3 +82,50 @@ class Calculations:
     def clear_history(cls) -> None:
         """Clear the calculation history."""
         cls.history.clear()
+
+class AddCommand(Command):
+    """Command to add two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.add(self.a, self.b)
+        print(f"The result of {self.a} add {self.b} is equal to {result}")
+
+class SubtractCommand(Command):
+    """Command to subtract two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.subtract(self.a, self.b)
+        print(f"The result of {self.a} subtract {self.b} is equal to {result}")
+
+class MultiplyCommand(Command):
+    """Command to multiply two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.multiply(self.a, self.b)
+        print(f"The result of {self.a} multiply {self.b} is equal to {result}")
+
+class DivideCommand(Command):
+    """Command to divide two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        try:
+            result = Calculator.divide(self.a, self.b)
+            print(f"The result of {self.a} divide {self.b} is equal to {result}")
+        except ZeroDivisionError:
+            print("An error occurred: Cannot divide by zero")
