@@ -1,5 +1,5 @@
 from calculator import Calculator, Calculation, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
-from command_pattern import CommandInvoker  # Update this line
+from command_pattern import CommandInvoker
 
 def get_number_input(prompt):
     while True:
@@ -32,7 +32,12 @@ def main():
         command = operations[operation](a, b)
         invoker.add_command(command)
         
-        invoker.execute_commands()
+        try:
+            invoker.execute_commands()
+        except ZeroDivisionError:
+            print("An error occurred: Cannot divide by zero")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
         if input("Wanna do another calculation? (y/n): ").lower() != 'y':
             break
