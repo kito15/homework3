@@ -1,5 +1,5 @@
 from calculator import Calculator, Calculation, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
-from command_pattern import CommandInvoker
+from command_pattern import CommandInvoker, CommandHistory
 
 def get_number_input(prompt):
     while True:
@@ -17,6 +17,7 @@ def main():
     }
 
     invoker = CommandInvoker()
+    history = CommandHistory()
 
     while True:
         print("Hey there! Let's do some math!")
@@ -31,6 +32,7 @@ def main():
 
         command = operations[operation](a, b)
         invoker.add_command(command)
+        history.add_command(command)
         
         try:
             invoker.execute_commands()
@@ -41,6 +43,10 @@ def main():
 
         if input("Wanna do another calculation? (y/n): ").lower() != 'y':
             break
+
+    print("Command history:")
+    for cmd in history.get_history():
+        print(f"Executed: {cmd.__class__.__name__}({cmd.a}, {cmd.b})")
 
 if __name__ == "__main__":
     main()

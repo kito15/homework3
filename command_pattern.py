@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 class Command(ABC):
     """Abstract base class for all commands."""
@@ -23,3 +24,72 @@ class CommandInvoker:
         for command in self.commands:
             command.execute()
         self.commands.clear()
+
+class CommandHistory:
+    """Class to manage a history of commands."""
+    
+    history = []
+    
+    @classmethod
+    def add_command(cls, command: Command) -> None:
+        """Add a command to the history."""
+        cls.history.append(command)
+    
+    @classmethod
+    def get_history(cls) -> List[Command]:
+        """Get the entire command history."""
+        return cls.history
+    
+    @classmethod
+    def clear_history(cls) -> None:
+        """Clear the command history."""
+        cls.history.clear()
+
+class AddCommand(Command):
+    """Command to add two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.add(self.a, self.b)
+        print(f"The result of {self.a} add {self.b} is equal to {result}")
+
+class SubtractCommand(Command):
+    """Command to subtract two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.subtract(self.a, self.b)
+        print(f"The result of {self.a} subtract {self.b} is equal to {result}")
+
+class MultiplyCommand(Command):
+    """Command to multiply two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        result = Calculator.multiply(self.a, self.b)
+        print(f"The result of {self.a} multiply {self.b} is equal to {result}")
+
+class DivideCommand(Command):
+    """Command to divide two numbers."""
+    
+    def __init__(self, a: float, b: float):
+        self.a = a
+        self.b = b
+    
+    def execute(self) -> None:
+        try:
+            result = Calculator.divide(self.a, self.b)
+            print(f"The result of {self.a} divide {self.b} is equal to {result}")
+        except ZeroDivisionError:
+            print("An error occurred: Cannot divide by zero")
+        except Exception as e:
+            print(f"An error occurred: {e}")
