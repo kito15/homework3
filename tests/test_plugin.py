@@ -22,6 +22,7 @@ def test_invalid_plugin():
     """
     Test loading an invalid plugin directory.
     """
+    operations = {}  # Initialize the operations dictionary
     with pytest.raises(FileNotFoundError):
         plugin_dir = 'invalid_plugin_dir'
-        load_plugins(plugin_dir)
+        load_plugins(plugin_dir, operations)  # Pass the operations dictionary
