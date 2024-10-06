@@ -21,12 +21,10 @@ def load_plugins(plugin_dir: str) -> List[CalculatorPlugin]:
             module_name = plugin_file[:-3]
             try:
                 module = importlib.import_module(f"{plugin_dir.replace('/', '.')}.{module_name}")
-                plugin_class = getattr(module, 'CalculatorPlugin')
-                if issubclass(plugin_class, CalculatorPlugin):
-                    plugin = plugin_class()
-                    plugins.append(plugin)
-                else:
-                    print(f"Warning: {module_name} does not implement the CalculatorPlugin interface.")
+                for name, obj in module.__dict__.items():
+                    if isinstance(obj, type) and issubclass(obj, CalculatorPlugin) and obj is not CalculatorPlugin:
+                        plugin = obj()
+                        plugins.append(plugin)
             except (ImportError, AttributeError) as e:
                 print(f"Error loading plugin {module_name}: {e}")
     return plugins
