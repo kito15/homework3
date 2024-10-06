@@ -4,7 +4,9 @@ Test suite for the command pattern module.
 from unittest.mock import patch
 from io import StringIO
 import pytest
-from command_pattern import CommandInvoker, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from command_pattern import (
+    CommandInvoker, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+)
 
 @pytest.mark.parametrize("command, inputs, expected_output", [
     (AddCommand, [5, 3], "The result of 5.0 add 3.0 is equal to 8.0\n"),
@@ -39,4 +41,7 @@ def test_command_invoker():
         invoker.add_command(AddCommand(5, 3))
         invoker.add_command(SubtractCommand(10, 2))
         invoker.execute_commands()
-        assert fake_out.getvalue() == "The result of 5.0 add 3.0 is equal to 8.0\nThe result of 10.0 subtract 2.0 is equal to 8.0\n"
+        assert fake_out.getvalue() == (
+            "The result of 5.0 add 3.0 is equal to 8.0\n"
+            "The result of 10.0 subtract 2.0 is equal to 8.0\n"
+        )
