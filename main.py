@@ -1,6 +1,9 @@
+import os
+import importlib
 from calculator.calculator import Calculator
 from calculator.calculation import Calculation, Calculations
 from command_pattern import CommandInvoker, CommandHistory, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from calculator.plugin import CalculatorPlugin
 
 def get_number_input(prompt):
     while True:
@@ -8,6 +11,24 @@ def get_number_input(prompt):
             return float(input(prompt))
         except ValueError:
             print("Invalid input. Please enter a number.")
+
+def load_plugins(plugin_dir: str) -> List[CalculatorPlugin]:
+    """Load plugins from the specified directory."""
+    plugins = []
+    for plugin_file in os.listdir(plugin_dir):
+        if plugin_file.endswith('.py'):
+            module_name = plugin_file[:-3]
+            try:
+                module = importlib.import_module(f"{plugin_dir.replace('/', '.')}.{module_name}")
+                plugin_class = getattr(module, 'CalculatorPlugin')
+                if issubclass(plugin_class, CalculatorPlugin):
+                    plugin = plugin_class()
+                    plugins.append(plugin)
+                else:
+                    print(f"Warning: {module_name} does not implement the CalculatorPlugin interface.")
+            except (ImportError, AttributeError) as e:
+                print(f"Error loading plugin {module_name}: {e}")
+    return plugins
 
 def main():
     operations = {
@@ -19,6 +40,13 @@ def main():
 
     invoker = CommandInvoker()
     history = CommandHistory()
+
+    # Load plugins
+    plugin_dir = 'plugins'
+    plugins = load_plugins(plugin_dir)
+    for plugin in plugins:
+        for command in plugin.get_commands():
+            operations[command.__name__.lower()] = command
 
     while True:
         print("Hey there! Let's do some math!")
