@@ -13,7 +13,7 @@ def get_number_input(prompt):
         except ValueError:
             print("Invalid input. Please enter a number.")
 
-def load_plugins(plugin_dir: str) -> List[CalculatorPlugin]:
+def load_plugins(plugin_dir: str, operations: dict) -> List[CalculatorPlugin]:
     """Load plugins from the specified directory."""
     plugins = []
     for plugin_file in os.listdir(plugin_dir):
@@ -35,7 +35,7 @@ def load_plugins(plugin_dir: str) -> List[CalculatorPlugin]:
                 print(f"Error loading plugin {module_name}: {e}")
     return plugins
 
-def display_menu():
+def display_menu(operations: dict):
     print("Available operations:")
     for key, value in operations.items():
         print(f"  {key}: {value['description']}")
@@ -53,10 +53,10 @@ def main():
 
     # Load plugins
     plugin_dir = 'plugins'
-    plugins = load_plugins(plugin_dir)
+    plugins = load_plugins(plugin_dir, operations)
 
     # Display the menu
-    display_menu()
+    display_menu(operations)
 
     while True:
         print("Hey there! Let's do some math!")
