@@ -1,6 +1,6 @@
 from calculator.plugin import CalculatorPlugin
 from command_pattern import Command, Calculator
-from typing import List  # Add this import
+from typing import List
 
 class SampleCommand(Command):
     def __init__(self, a: float, b: float):
