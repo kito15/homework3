@@ -2,6 +2,7 @@ from unittest.mock import patch
 from io import StringIO
 import pytest
 from plugins.sample_plugin import SamplePlugin
+from main import load_plugins  # Import the load_plugins function
 
 def test_execute_plugin_command():
     with patch('sys.stdout', new=StringIO()) as fake_out:
