@@ -9,7 +9,7 @@ class SampleCommand(Command):
     
     def execute(self) -> None:
         result = self.a ** self.b
-        print(f"The result of {self.a} power {self.b} is equal to {result}")
+        print(f"The result of {self.a:.1f} power {self.b:.1f} is equal to {result:.1f}")
 
 class SamplePlugin(CalculatorPlugin):
     def get_commands(self) -> List[Command]:

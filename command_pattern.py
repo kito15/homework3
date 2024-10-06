@@ -55,7 +55,7 @@ class AddCommand(Command):
     
     def execute(self) -> None:
         result = Calculator.add(self.a, self.b)
-        print(f"The result of {self.a} add {self.b} is equal to {result}")
+        print(f"The result of {self.a:.1f} add {self.b:.1f} is equal to {result:.1f}")
 
 class SubtractCommand(Command):
     """Command to subtract two numbers."""
@@ -66,7 +66,7 @@ class SubtractCommand(Command):
     
     def execute(self) -> None:
         result = Calculator.subtract(self.a, self.b)
-        print(f"The result of {self.a} subtract {self.b} is equal to {result}")
+        print(f"The result of {self.a:.1f} subtract {self.b:.1f} is equal to {result:.1f}")
 
 class MultiplyCommand(Command):
     """Command to multiply two numbers."""
@@ -77,7 +77,7 @@ class MultiplyCommand(Command):
     
     def execute(self) -> None:
         result = Calculator.multiply(self.a, self.b)
-        print(f"The result of {self.a} multiply {self.b} is equal to {result}")
+        print(f"The result of {self.a:.1f} multiply {self.b:.1f} is equal to {result:.1f}")
 
 class DivideCommand(Command):
     """Command to divide two numbers."""
@@ -89,7 +89,7 @@ class DivideCommand(Command):
     def execute(self) -> None:
         try:
             result = Calculator.divide(self.a, self.b)
-            print(f"The result of {self.a} divide {self.b} is equal to {result}")
+            print(f"The result of {self.a:.1f} divide {self.b:.1f} is equal to {result:.1f}")
         except ZeroDivisionError:
             print("An error occurred: Cannot divide by zero")
         except Exception as e:
