@@ -1,16 +1,21 @@
 import os
 import importlib
+import logging
 from calculator.calculator import Calculator
 from calculator.calculation import Calculation, Calculations
 from command_pattern import CommandInvoker, CommandHistory, AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 from calculator.plugin import CalculatorPlugin
 from typing import List
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 def get_number_input(prompt):
     while True:
         try:
             return float(input(prompt))
         except ValueError:
+            logging.error("Invalid input. Please enter a number.")
             print("Invalid input. Please enter a number.")
 
 def load_plugins(plugin_dir: str, operations: dict) -> List[CalculatorPlugin]:
@@ -32,6 +37,7 @@ def load_plugins(plugin_dir: str, operations: dict) -> List[CalculatorPlugin]:
                                 'description': f"Perform {command_name} operation"
                             }
             except (ImportError, AttributeError) as e:
+                logging.error(f"Error loading plugin {module_name}: {e}")
                 print(f"Error loading plugin {module_name}: {e}")
     return plugins
 
@@ -67,6 +73,7 @@ def main():
         while operation not in operations:
             operation = input("Enter the operation (add/subtract/multiply/divide): ").lower()
             if operation not in operations:
+                logging.error(f"Unknown operation: {operation}")
                 print(f"An error occurred: Unknown operation: {operation}")
 
         command = operations[operation]['command'](a, b)
@@ -76,8 +83,10 @@ def main():
         try:
             invoker.execute_commands()
         except ZeroDivisionError:
+            logging.error("Cannot divide by zero")
             print("An error occurred: Cannot divide by zero")
         except Exception as e:
+            logging.error(f"An error occurred: {e}")
             print(f"An error occurred: {e}")
 
         if input("Wanna do another calculation? (y/n): ").lower() != 'y':
