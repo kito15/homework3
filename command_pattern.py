@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
+from calculator import Calculator  # Import the Calculator class
 
 class Command(ABC):
     """Abstract base class for all commands."""
