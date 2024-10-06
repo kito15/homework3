@@ -25,16 +25,27 @@ def load_plugins(plugin_dir: str) -> List[CalculatorPlugin]:
                     if isinstance(obj, type) and issubclass(obj, CalculatorPlugin) and obj is not CalculatorPlugin:
                         plugin = obj()
                         plugins.append(plugin)
+                        for command in plugin.get_commands():
+                            command_name = command.__name__.lower()
+                            operations[command_name] = {
+                                'command': command,
+                                'description': f"Perform {command_name} operation"
+                            }
             except (ImportError, AttributeError) as e:
                 print(f"Error loading plugin {module_name}: {e}")
     return plugins
 
+def display_menu():
+    print("Available operations:")
+    for key, value in operations.items():
+        print(f"  {key}: {value['description']}")
+
 def main():
     operations = {
-        'add': AddCommand,
-        'subtract': SubtractCommand,
-        'multiply': MultiplyCommand,
-        'divide': DivideCommand
+        'add': {'command': AddCommand, 'description': 'Add two numbers'},
+        'subtract': {'command': SubtractCommand, 'description': 'Subtract the second number from the first'},
+        'multiply': {'command': MultiplyCommand, 'description': 'Multiply two numbers'},
+        'divide': {'command': DivideCommand, 'description': 'Divide the first number by the second'}
     }
 
     invoker = CommandInvoker()
@@ -43,9 +54,9 @@ def main():
     # Load plugins
     plugin_dir = 'plugins'
     plugins = load_plugins(plugin_dir)
-    for plugin in plugins:
-        for command in plugin.get_commands():
-            operations[command.__name__.lower()] = command
+
+    # Display the menu
+    display_menu()
 
     while True:
         print("Hey there! Let's do some math!")
@@ -58,7 +69,7 @@ def main():
             if operation not in operations:
                 print(f"An error occurred: Unknown operation: {operation}")
 
-        command = operations[operation](a, b)
+        command = operations[operation]['command'](a, b)
         invoker.add_command(command)
         history.add_command(command)
         
